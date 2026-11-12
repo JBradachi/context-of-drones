@@ -1,0 +1,8 @@
+[
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "# [endpoint=./drones.ttl]\n\nBASE         <http://nesped1.caf.ufv.br/context-drones>\nPREFIX cod:  <#>\nPREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>\nPREFIX owl:  <http://www.w3.org/2002/07/owl#>\nPREFIX qu:   <http://purl.oclc.org/NET/ssnx/qu/qu#>\nPREFIX dim:  <http://purl.oclc.org/NET/ssnx/qu/dim#>\nPREFIX unit: <http://purl.oclc.org/NET/ssnx/qu/unit#>\nPREFIX lang: <https://id.loc.gov/vocabulary/iso639-1/>\nPREFIX cot: <http://nesped1.caf.ufv.br/od4cot>\n\n# SELECT DISTINCT ?reference\n# WHERE { \n#   ?class a owl:Class . \n#   ?class cod:citedBy ?citation . \n#   ?citation cod:reference ?reference . \n# } \n\nSELECT (COUNT(DISTINCT ?reference) AS ?totalReferences)\nWHERE { \n  ?class a owl:Class . \n  ?class cod:citedBy ?citation . \n  ?citation cod:reference ?reference . \n}",
+    "metadata": {}
+  }
+]

@@ -1,0 +1,724 @@
+BASE         <http://nesped1.caf.ufv.br/context-drones>
+PREFIX cod:  <#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX qu:   <http://purl.oclc.org/NET/ssnx/qu/qu#>
+PREFIX dim:  <http://purl.oclc.org/NET/ssnx/qu/dim#>
+PREFIX unit: <http://purl.oclc.org/NET/ssnx/qu/unit#>
+PREFIX lang: <https://id.loc.gov/vocabulary/iso639-1/>
+PREFIX cot: <http://nesped1.caf.ufv.br/od4cot>
+
+# um DT mapeia propriedades, condições e comportamentos de um objeto fisico para um software digital 
+# - 10.1109/JPROC.2020.2998530
+
+# simulador de drone AirSim, Flightmare https://doi.org/10.1145/3769426
+
+</definition> a owl:Ontology ;
+    rdfs:comment "OD4CoT upper level definitions module." ;
+    .
+
+cot:Resource a owl:Class ;
+    rdfs:comment "An informational or material resource." ;
+    .
+
+cot:Context a owl:Class ;
+    rdfs:comment "A piece of information about the status or capabilities of an entity." ;
+    rdfs:subClassOf cot:Resource ;
+    .
+
+cot:hasContext a owl:ObjectProperty ;
+    rdfs:comment "Indicates that an object has a context." ;
+    rdfs:domain cot:Resource ;
+    rdfs:range cot:Context ;
+    .
+
+cot:SmartObject a owl:Class ;
+    rdfs:comment "" ;
+    rdfs:subClassOf cot:Resource ;
+    .
+
+cod:Article a owl:Class ;
+    rdfs:comment "scientific text published in journals" ;
+    .
+
+cod:reference a owl:ObjectProperty;
+    rdfs:comment "The article's DOI numbers that cite the context" ; 
+    rdfs:domain cod:Article
+    .
+
+cod:citedBy a owl:ObjectProperty;
+    rdfs:comment "" ; 
+    rdfs:domain cod:Article
+    .
+
+# ======================= CONTEXTS OF DRONES ================================
+
+cod:Speed a owl:Class ;
+    rdfs:comment "The speed at which an object moves through space over time." ;
+    rdfs:subClassOf cot:Context ;
+    cod:citedBy [
+        cod:reference "10.1109/TITS.2021.3108995";
+        cod:reference "10.1109/TVT.2022.3152597";
+        cod:reference "10.1109/LWC.2020.3014972";
+        cod:reference "10.1109/TWC.2020.3015735";
+        cod:reference "10.1109/MCOM.2018.1701065";
+        cod:reference "10.1109/TMC.2022.3228870";
+        cod:reference "10.1109/ICRA57385.2026.11696399";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+        cod:reference "10.3390/drones9070508";
+        cod:reference "10.1016/j.scs.2022.104122";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+        cod:reference "10.1109/MAPCON58678.2023.10464130";
+        cod:reference "10.1007/s13272-026-00961-3";
+    ] ;
+    # velocity
+    # traffic parameters speed, flow, and occupancy
+    # trafic factors visibility, rainfall, snowfall, road icing, and wind speed
+    # high speed low speed cod:reference "10.1109/IWCMC65282.2025.11059545";
+.
+
+cod:Image a owl:Class;
+    rdfs:comment "contexto resultante da captação de uma câmera";
+    rdfs:domain cod:Camera;
+    # estático (foto) ou dinâmico (vídeo)
+    rdfs:subClassOf cot:Context ;
+    cod:citedBy [
+        cod:reference "10.1109/LWC.2020.3014972";
+        cod:reference "10.1109/MIOT.2026.3661300";
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+    ]
+.
+
+cod:Location a owl:Class;
+    rdfs:comment "onde o drone está localizado geograficamente";
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "10.1109/TWC.2020.3015735";
+        cod:reference "10.1109/MCOM.2018.1701065";
+        cod:reference "doi.org/10.1145/3659946";
+        cod:reference "10.1109/JPROC.2020.2998530";
+        cod:reference "https://doi.org/10.1145/3769426";
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "https://doi.org/10.1145/3828658";
+        cod:reference "10.1109/ICRA57385.2026.11696399";
+        cod:reference "10.1109/ICUAS65942.2025.11007798";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+        cod:reference "10.1109/MIOT.2026.3661300";
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1109/SoSE59841.2023.10178526";
+        cod:reference "10.1109/TCCN.2026.3658762";
+        cod:reference "10.1109/TII.2024.3431106";
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+        cod:reference "10.3390/drones9070508";
+    ]
+    #Incerteza Espacial (o contexto demora alguns ms para chegar no sistema)
+.
+
+cod:Yaw a owl:Class;
+    rdfs:subClassOf cod:Attitude;
+    rdfs:comment "angulo de rotação no eixo z";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICRA57385.2026.11696399";
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1109/TII.2024.3431106";
+        cod:reference "10.1109/TII.2024.3431106";
+    ]
+.
+
+cod:Pitch a owl:Class;
+    rdfs:subClassOf cod:Attitude;
+    rdfs:comment "angulo de rotação no eixo y";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICRA57385.2026.11696399";
+        cod:reference "10.1109/TII.2024.3431106";
+        cod:reference "10.1109/TII.2024.3431106";
+    ]
+.
+
+cod:Roll a owl:Class;
+    rdfs:subClassOf cod:Attitude;
+    rdfs:comment "angulo de rotação no eixo x";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/TII.2024.3431106";
+        cod:reference "10.1109/TII.2024.3431106";
+    ]
+.
+
+cod:Attitude a owl:Class;
+    rdfs:comment "eixos re rotação de um drone";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+        cod:reference "10.3390/drones9070508";
+        cod:reference "10.1109/TII.2024.3431106";
+        cod:reference "10.1007/s13272-026-00961-3";
+    ]
+.
+
+
+cod:Battery a owl:Class;
+    rdfs:comment "módulo de energia que alimenta o dispositivo";
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "10.1109/MCOM.2018.1701065";
+        cod:reference "10.1109/TITS.2022.3155072";
+        cod:reference "10.1109/TMC.2022.3228870";   
+        cod:reference "10.1109/TITS.2021.3108995";
+        cod:reference "https://doi.org/10.1145/3769426";
+        cod:reference "https://doi.org/10.1145/3828658";
+        cod:reference "10.1016/j.scs.2022.104122";
+        cod:reference "10.1109/ACCESS.2020.2979339";
+    ]
+.
+
+# cod:reference "10.1109/ACCESS.2020.2979339"; Li-Po 6-cell battery with a capacity of 10000 mAh
+
+cod:EnergyConsumption a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/WCNC49053.2021.9417521";
+        cod:reference "https://doi.org/10.1145/3769426";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+    ]
+.
+
+cod:Fuel a owl:Class;
+    rdfs:comment "o que alimenta o dispositivo";
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "10.1109/MCOM.2018.1701065";
+    ]
+.
+
+cod:Storage a owl:Class;
+    rdfs:comment "módulo capaz de persistir algo";
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "10.1109/MCOM.2018.1701065";
+
+    ]
+.
+
+cod:Connection a owl:Class;
+    rdfs:comment "wifi bt ethernet";
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "10.1109/MCOM.2018.1701065";
+        cod:reference "doi.org/10.1145/3659946";
+        cod:reference "10.1109/JPROC.2020.2998530";
+        cod:reference "10.1109/TITS.2021.3108995";
+        cod:reference "10.1109/JSAC.2023.3310065";
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "https://doi.org/10.1145/3828658";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+        cod:reference "10.1109/MIOT.2026.3661300";
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1007/978-3-031-71397-2_5";
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+    ]
+.
+
+#Wi-Fi, Bluetooth, and LoRa
+# Ultra-Width Band 10.1109/IWCMC65282.2025.11059545
+
+cod:LinkState a owl:Class;
+    rdfs:comment "estado da conexão" ;
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "10.1109/MCOM.2018.1701065";
+        cod:reference "10.1109/TITS.2021.3108995";
+
+    ]
+.
+
+cod:Direction a owl:Class; # provavelmente esse é attitude
+    rdfs:comment "direção que o uav está indo" ;
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "10.1109/MCOM.2018.1701065";
+        cod:reference "https://doi.org/10.1145/3769426";
+        cod:reference "10.3390/drones9070508";
+    ]
+.
+
+cod:Trajectory a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    rdfs:domain cod:Speed;
+    rdfs:domain cod:Direction;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3769426";
+        cod:reference "https://doi.org/10.1145/3828658";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+    ]
+.
+
+cod:Navigation a owl:Class;
+    rdfs:comment "onde estou+para onde vou";
+    # união de location com algum outro?
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3769426";
+        cod:reference "10.1109/ICCSS52145.2020.9336872";
+    ]
+.
+# exemplo: UTM-30LX-EW
+
+cod:Weight a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context ;
+    cod:citedBy [
+        cod:reference "10.1109/TITS.2022.3155072";
+        cod:reference "10.1109/SoSE59841.2023.10178526";
+        cod:reference "10.1007/978-3-031-71397-2_5";
+        cod:reference "10.1109/TII.2024.3431106";
+        cod:reference "10.1016/j.scs.2022.104122";
+    ]
+.
+
+cod:WeightLoadCapacity a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context ;
+    cod:citedBy [
+        cod:reference "10.1109/TITS.2022.3155072";
+        cod:reference "https://doi.org/10.1145/3763788";
+        # Cargo capacity
+    ]
+.
+
+cod:FlyingRange a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context ;
+    cod:citedBy [
+        cod:reference "10.1109/TITS.2022.3155072";
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "10.1016/j.scs.2022.104122";
+    ]
+.
+
+cod:OperatingAltitude a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "10.1016/j.scs.2022.104122";
+        cod:reference "10.1007/s13272-026-00961-3";
+    ]
+.
+
+cod:AltitudeBound a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1016/j.scs.2022.104122";
+    ]
+.
+
+cod:Coverage a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3769426";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+    ]
+.
+
+cod:WingType a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "10.1109/TITS.2022.3155072";
+        cod:reference "10.1109/JSEN.2024.3375862";
+
+    ]
+.
+
+cod:Mobility a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context ;
+        cod:citedBy [
+        cod:reference "doi.org/10.1145/3659946";
+        cod:reference "10.1109/TMC.2022.3228870";
+        cod:reference "10.1109/JPROC.2020.2998530";
+        cod:reference "https://doi.org/10.1145/3769426";
+        cod:reference "10.1109/JSAC.2023.3310065";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+        cod:reference "10.1109/TCCN.2026.3658762";
+    ]
+.
+
+cod:CPU a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/WCNC49053.2021.9417521";
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+    ]
+.
+
+cod:CPUcycles a owl:Class;
+    rdfs:comment "Ciclos do clock da CPU";
+    rdfs:subClassOf cot:Context;
+        rdfs:subClassOf cot:CPU;
+    cod:citedBy [
+        cod:reference "10.1109/WCNC49053.2021.9417521";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+    ]
+.
+
+cod:CPUfrequency a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:CPU;
+    cod:citedBy [
+        cod:reference "10.1109/WCNC49053.2021.9417521";
+        cod:reference "10.1109/ACCESS.2025.3648539";
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+    ]
+.
+
+cod:Size a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "10.1109/ICRA57385.2026.11696399";
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1109/ACCESS.2020.2979339";
+        cod:reference "10.1109/JSEN.2024.3375862";
+    ]
+.
+
+cod:Shape a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ACCESS.2020.2979339";
+        cod:reference "10.1109/iWAT57058.2023.10171615";
+    ]
+.
+
+cod:XShape a owl:Class, cod:Shape;
+    rdfs:comment "quadcopters";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ACCESS.2020.2979339";
+    ]
+.
+
+cod:HShape a owl:Class;
+    rdfs:comment "quadcopter";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ACCESS.2020.2979339";
+    ]
+.
+
+cod:YShape a owl:Class;
+    rdfs:comment "tricopter";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ACCESS.2020.2979339";
+        # quadrocopters with X-shape, H-shape frame, hexacopter, Y-shape tricopter
+    ]
+.
+
+
+cod:Mini a cod:Size;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788"
+    ]
+.
+
+cod:Small a cod:Size;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788"
+    ]
+.
+
+cod:Tatical a cod:Size;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788"
+    ]
+.
+
+cod:Propeller a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICCSS52145.2020.9336872";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+        cod:reference "10.1007/s13272-026-00961-3";
+    ]
+.
+
+cod:Motor a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICCSS52145.2020.9336872";
+    ]
+.
+
+cod:Arm a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICCSS52145.2020.9336872";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+    ]
+.
+
+cod:Body a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICCSS52145.2020.9336872";
+    ]
+.
+
+cod:Cage a owl:Class;
+    rdfs:comment "Jaula de proteção do drone";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ACCESS.2020.2979339";
+    ]
+.
+
+cod:MainMaterial a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ACCESS.2020.2979339";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+    ]
+.
+#carbon fiber
+
+cod:Tripod a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICCSS52145.2020.9336872";
+    ]
+.
+
+cod:RotorType a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "10.1109/JSEN.2024.3375862";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+        cod:reference "10.1109/iWAT57058.2023.10171615";
+    ]
+.
+
+cod:SingleRotor a cod:RotorType;
+    rdfs:comment "Helicopter";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "10.1109/JSEN.2024.3375862";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+        cod:reference "10.1109/iWAT57058.2023.10171615";
+    ]
+.
+
+cod:MultiRotor a cod:RotorType;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "10.1109/JSEN.2024.3375862";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+        cod:reference "10.1109/iWAT57058.2023.10171615";
+    ]
+.
+
+cod:Hexacopter a owl:Class, cod:MultiRotor;
+    rdfs:comment " drone com seis rotores";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/JSEN.2024.3375862";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+        cod:reference "10.1109/iWAT57058.2023.10171615";
+    ]
+.
+
+cod:Quadcopter a owl:Class, cod:MultiRotor;
+    rdfs:comment "drone com quatro rotores";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/JSEN.2024.3375862";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+        cod:reference "10.1109/iWAT57058.2023.10171615";
+    ]
+.
+
+#RotorBladeRadius cod:reference "10.1016/j.scs.2022.104122";
+# tipo principal de material de cada componente
+
+cod:FixedWing a owl:Class, cod:RotorType;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "10.1109/JSEN.2024.3375862";
+        cod:reference "10.1109/ITC-Egypt55520.2022.9855753";
+        cod:reference "10.1109/iWAT57058.2023.10171615";
+    ]
+.
+
+cod:Sensor a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "https://doi.org/10.1145/3828658";
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1109/SoSE59841.2023.10178526";
+        cod:reference "10.1109/IWCMC65282.2025.11059545";
+        cod:reference "10.1007/s13272-026-00961-3";
+    ]
+.
+
+cod:Camera a owl:Class, cod:Sensor;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    rdfs:subClassOf cot:Sensor;
+    cod:citedBy [
+        cod:reference "10.1109/IWCMC65282.2025.11059545"
+    ]
+.
+
+cod:LocoPositioningSystem a owl:Class, cod:Sensor;
+    rdfs:comment "Sistema de posicionamento local 3D indoor de código aberto desenvolvido pela Bitcraze";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+        cod:reference "10.1109/SoSE59841.2023.10178526";
+    ]
+.
+
+cod:IMU a owl:Class, cod:Sensor;
+    rdfs:comment "Inertial Measurement Unit, Acelerômetro, Giroscópio, Magnetômetro";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+    ]
+.
+
+cod:Barometer a owl:Class, cod:Sensor;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICNS69853.2026.11570433";
+    ]
+.
+
+cod:CMOS a owl:Class, cod:Sensor;
+    rdfs:comment "Complementary Metal-Oxide-Semiconductor";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/EEITE69609.2026.11679705"
+    ]
+    # gera cod:images
+.
+
+cod:CompanionComputer a owl:Class;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "https://doi.org/10.1145/3763788";
+        cod:reference "10.1109/MIOT.2026.3661300";
+    ]
+.
+
+cod:RotationSpeed a owl:ObjectProperty;
+    rdfs:domain cod:Propeller;
+    rdfs:comment "";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1109/ICCSS52145.2020.9336872";
+    ]
+.
+
+cod:Autonomous a owl:Class;
+    rdfs:comment "A capacidade de um drone ser autônomo, controlado por agente";
+    rdfs:subClassOf cot:Context;
+    cod:citedBy [
+        cod:reference "10.1007/978-3-031-71397-2_5";
+    ]
+.
+
+# Air Model. It defines the implemented atmosphere model. It allows to define air density, 
+# wind direction, and eventual atmospheric variables like rain, snow, and fog
+
+# Belonging, Connectivity, Diversity, and Emergence 10.1007/978-3-031-71397-2_5
+# inertia matrix, and aerodynamic coefficients "10.1007/978-3-031-71397-2_5"; 10.1109/TII.2024.3431106
+
+# marcas de drones: crazyflie, DJI Air 2S UAV, DJI S900, DJI Matrice M100 quadrocopter, HMF Y600, 
+# and Walkera Voyager 4, 
+# DJI Mavic Pro, DJI Phantom 4 Pro, helicopter Kyosho, and DJI F450, Parrot AR.Dronecacage "10.1109/ACCESS.2020.2979339";
+# DJI Phantom 3, Albatross, Black Eagle 50, DJI S900 [45], DJI FPV [46], MD4-1000 [47], 10.1109/TMTT.2024.3400889
+# Albatross, Black Eagle 50, DJI S900 [45], DJI FPV 10.1109/JSEN.2024.3375862
+# DJI Phantom 4 Pro V2.0 quadcopter cod:reference "10.1109/MAPCON58678.2023.10464130";
+# simuladores SkyMission
+# AirSim "10.3390/drones9070508";
+# Skiron-X eVTOL drone 10.1007/s13272-026-00961-3
+
+
+#
+# travel time "10.1109/MCOM.2018.1701065"
+# antennas, "10.1109/TWC.2020.3015735"
+# power (energia/bateria, força de sinal), mobility, ruído
+# latency, connection density "10.1109/MCOM.2018.1701065";
+# network coverage
+
+cot:Shape a owl:Class, cot:ContextCategory ;
+    rdfs:comment "The approximate shape and size of an object." ;
+    rdfs:subClassOf cot:Context ;
+    cod:reference "10.1109/ICRA57385.2026.11696399"; # cubo
+    cod:reference "10.1109/ICNS69853.2026.11570433"; # cubo
+    cod:reference "10.1109/iWAT57058.2023.10171615";
+    .
+
+# cot:PowerSupply a owl:Class, cot:ContextCategory ;
+#     rdfs:comment "The means through which electric power is supplied to a device." ;
+#     rdfs:subClassOf cot:Context ;
+#     .
+
+# cot:BatterySupply a owl:Class ;
+#     rdfs:comment "The usage of battery cell(s) to supply electric power to a device." ;
+#     rdfs:subClassOf cot:PowerSupply ;
+#     .
+
+# using FL to assist in constructing a DT model
+#https://ieeexplore-ieee-org.ez35.periodicos.capes.gov.br/document/9451579
+
+
+# https://dl-acm-org.ez35.periodicos.capes.gov.br/doi/10.1145/3659946#core-collateral-Bib0092
+# ctrl f em  (2) UAV Network:
+
+# drone applications in various domains https://ieeexplore-ieee-org.ez35.periodicos.capes.gov.br/document/9733971
+
+#  If the weight carrying capacities or flying ranges are exceeded, drones may be subject to failures and 
+# accidents. "10.1109/TITS.2022.3155072" 
